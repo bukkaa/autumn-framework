@@ -2,16 +2,24 @@ package ru.bukkaa.autumnframework.util;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import ru.bukkaa.autumnframework.police.AngryRoomPoliceman;
+import ru.bukkaa.autumnframework.police.Policeman;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class ObjectFactory {
     @Getter
     private static final ObjectFactory instance = new ObjectFactory();
 
-    private final Config config = new JavaConfig("ru.bukkaa.autumnframework");
+    private final Config config;
 
 
-    private ObjectFactory() { }
+    private ObjectFactory() {
+        config = new JavaConfig("ru.bukkaa.autumnframework",
+                                new HashMap<>(Map.of(Policeman.class, AngryRoomPoliceman.class)));
+    }
 
 
     @SneakyThrows
@@ -22,6 +30,10 @@ public class ObjectFactory {
             implClass = config.getImplClass(type);
         }
 
-        return implClass.getDeclaredConstructor().newInstance();
+        T instance = implClass.getDeclaredConstructor().newInstance();
+
+        // todo set up bean
+
+        return instance;
     }
 }
