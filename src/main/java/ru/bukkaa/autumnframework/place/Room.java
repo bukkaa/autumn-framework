@@ -1,11 +1,13 @@
-package ru.bukkaa.autumnframework;
+package ru.bukkaa.autumnframework.place;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Room {
+public class Room implements Place {
     String name;
 }
